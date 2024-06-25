@@ -13,24 +13,26 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TransactionsVM @Inject constructor(private val getTransactionsListUseCase: GetTransactionsListUseCase): BaseVM() {
+class TransactionsVM @Inject constructor(private val getTransactionsListUseCase: GetTransactionsListUseCase) : BaseVM() {
 
     val transactionsListFlow = MutableStateFlow<ArrayList<TransactionUIModel>>(arrayListOf())
     val accountBalanceFlow = MutableStateFlow(AccountBalance(0.0))
 
     init {
-       fetchData()
+        viewModelScope.launch {
+            showProgress()
+            fetchData()
+            hideProgress()
+        }
     }
 
-    private fun fetchData() {
-        viewModelScope.launch {
-            val result = getTransactionsListUseCase()
-            result.runIfSuccess {
-                calculateAccountBalance(it)
-                transactionsListFlow.emit(it)
-            }
-            result.runIfError { onError(it) }
+    private suspend fun fetchData() {
+        val result = getTransactionsListUseCase()
+        result.runIfSuccess {
+            calculateAccountBalance(it)
+            transactionsListFlow.emit(it)
         }
+        result.runIfError { onError(it) }
     }
 
     private fun calculateAccountBalance(items: List<TransactionUIModel>) {
@@ -41,7 +43,7 @@ class TransactionsVM @Inject constructor(private val getTransactionsListUseCase:
     }
 
     fun onRefresh() {
-        fetchData()
+        viewModelScope.launch { fetchData() }
     }
 
     fun onTransactionItemClick(transaction: TransactionUIModel) {

@@ -2,6 +2,7 @@ package com.transactions.homework.ui.transactions
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.kobanister.viewbindingannotations.annotation.BindFragment
 import com.transactions.homework.R
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TransactionsFragment : BaseFragment<TransactionsVM, FragmentTransactionsBinding>() {
     override val viewModel: TransactionsVM by viewModels()
     override val observeFlow: TransactionsVM.() -> Unit = {
+        progressFlow.observeInLifecycle { binding.progressView.isVisible = it }
         transactionsListFlow.observeInLifecycle(::setupTransactionsList)
         accountBalanceFlow.observeInLifecycle(::setupUi)
     }
@@ -32,18 +34,20 @@ class TransactionsFragment : BaseFragment<TransactionsVM, FragmentTransactionsBi
 
         with(binding) {
             rvTransactions.adapter = rvTransactionsAdapter
-            transactionsSrl.setOnRefreshListener(viewModel::onRefresh)
+            transactionsSrl.setOnRefreshListener {
+                viewModel.onRefresh()
+                transactionsSrl.isRefreshing = false
+            }
         }
     }
 
     private fun setupUi(accountBalance: AccountBalance) {
         with(binding) {
             transactionTvBalance.text = getString(R.string.transactionsTvBalance, accountBalance.balance)
-            transactionsSrl.isRefreshing = false
         }
     }
 
-    private  fun setupTransactionsList(items: List<TransactionUIModel>) {
+    private fun setupTransactionsList(items: List<TransactionUIModel>) {
         rvTransactionsAdapter.setItems(items)
     }
 }
