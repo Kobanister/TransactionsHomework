@@ -6,6 +6,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.transactions.homework.BuildConfig
 import com.transactions.homework.data.remote.ConnectionTimeoutInterceptor
 import com.transactions.homework.data.remote.api.Api
+import com.transactions.homework.data.remote.util.HttpLogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -31,11 +33,20 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    fun provideHttpLoggerInterceptor(customHttpLogger: HttpLogger): HttpLoggingInterceptor {
+        val logger = HttpLoggingInterceptor(customHttpLogger)
+        logger.level = HttpLoggingInterceptor.Level.BODY
+        return logger
+    }
+
+    @Singleton
+    @Provides
     fun provideOkHttpClient(
-        connectionTimeoutInterceptor: ConnectionTimeoutInterceptor,
-    ): OkHttpClient =
-        OkHttpClient.Builder()
+        loggerInterceptor: HttpLoggingInterceptor,
+        connectionTimeoutInterceptor: ConnectionTimeoutInterceptor
+    ): OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(connectionTimeoutInterceptor)
+            .addNetworkInterceptor(loggerInterceptor)
             .build()
 
     @Singleton
@@ -43,7 +54,7 @@ class NetworkModule {
     fun provideRetrofit(
         httpUrl: HttpUrl,
         client: OkHttpClient,
-        gson: Gson,
+        gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(httpUrl)

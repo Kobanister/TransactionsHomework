@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface Api {
     @GET("transactions")
-    fun getTransactionsList(): List<TransactionRemote>
+    suspend fun getTransactionsList(): List<TransactionRemote>
 }
