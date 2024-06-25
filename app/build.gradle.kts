@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.constraint)
     implementation(libs.activity.ktx)
     implementation(libs.fragment.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
 
     // ViewBinding
     implementation(libs.viewbinding)
