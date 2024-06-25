@@ -2,7 +2,7 @@ package com.transactions.homework.ui.parcel
 
 import android.os.Parcelable
 import com.transactions.homework.data.transaction.TransactionUIModel
-import com.transactions.homework.ui.utils.buildTestParameters
+import com.transactions.homework.ui.util.buildTestParameters
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

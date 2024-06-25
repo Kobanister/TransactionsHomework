@@ -1,4 +1,4 @@
-package com.transactions.homework.ui.utils
+package com.transactions.homework.ui.util
 
 fun buildTestParameters(
     paramsSetSize: Int,
