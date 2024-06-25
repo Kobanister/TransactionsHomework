@@ -9,15 +9,11 @@ abstract class BaseRvAdapter<T, VH : BaseVH<T>> : RecyclerView.Adapter<VH>() {
 
     override fun getItemCount(): Int = items?.size ?: 0
 
-    open fun setItems(items: ArrayList<T>, clone: Boolean = true) {
-        if (clone) {
-            if (this.items != null) {
-                this.items?.clear()
-            }
-            this.items = ArrayList(items)
-        } else {
-            this.items = items
+    open fun setItems(items: List<T>) {
+        if (this.items != null) {
+            this.items?.clear()
         }
+        this.items = ArrayList(items)
         notifyDataSetChanged()
     }
 

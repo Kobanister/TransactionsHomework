@@ -4,5 +4,6 @@
     <!-- Transactions Screen -->
     <string name="transactionsTvBalance">Account Balance: %,.2f</string>
     <string name="transactionsTvBalancePlaceHolder">Account Balance: 0.0</string>
+    <string name="transactionsTvAmount">%,.2f</string>
     <!-- /Transactions Screen -->
 </resources>
