@@ -68,6 +68,10 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
 
+    // Navigation
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

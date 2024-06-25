@@ -32,11 +32,15 @@ class TransactionsFragment : BaseFragment<TransactionsVM, FragmentTransactionsBi
 
         with(binding) {
             rvTransactions.adapter = rvTransactionsAdapter
+            transactionsSrl.setOnRefreshListener(viewModel::onRefresh)
         }
     }
 
     private fun setupUi(accountBalance: AccountBalance) {
-        binding.transactionTvBalance.text = getString(R.string.transactionsTvBalance, accountBalance.balance)
+        with(binding) {
+            transactionTvBalance.text = getString(R.string.transactionsTvBalance, accountBalance.balance)
+            transactionsSrl.isRefreshing = false
+        }
     }
 
     private  fun setupTransactionsList(items: List<TransactionUIModel>) {
