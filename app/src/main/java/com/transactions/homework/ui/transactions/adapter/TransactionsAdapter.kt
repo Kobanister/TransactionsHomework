@@ -17,6 +17,7 @@ class TransactionsAdapter : BaseRvAdapter<TransactionUIModel, TransactionsAdapte
     inner class ViewHolder(private val binding: ItemTransactionBinding) : BaseVH<TransactionUIModel>(binding.root) {
         override fun bind(item: TransactionUIModel) {
             with(binding) {
+                itemView.setOnClickListener { onItemClickListener?.invoke(item) }
                 itemTransactionTvName.text = item.name
                 itemTransactionTvDate.text = item.date
                 itemTransactionTvAmount.text = ctx().getString(R.string.transactionsTvAmount, item.amount)

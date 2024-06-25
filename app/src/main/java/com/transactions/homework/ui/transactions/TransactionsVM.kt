@@ -44,7 +44,7 @@ class TransactionsVM @Inject constructor(private val getTransactionsListUseCase:
         fetchData()
     }
 
-    fun onTransactionItemClick(transactions: TransactionUIModel) {
-        TODO("Not yet implemented")
+    fun onTransactionItemClick(transaction: TransactionUIModel) {
+        navigate(TransactionsFragmentDirections.openTransactionDetails(transaction))
     }
 }

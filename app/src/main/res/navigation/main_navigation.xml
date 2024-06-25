@@ -9,5 +9,19 @@
         android:id="@+id/transactionsListFragment"
         android:name="com.transactions.homework.ui.transactions.TransactionsFragment"
         android:label="transactionsListFragment"
-        tools:layout="@layout/fragment_transactions"/>
+        tools:layout="@layout/fragment_transactions">
+        <action
+            android:id="@+id/openTransactionDetails"
+            app:destination="@id/transactionDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionDetailsFragment"
+        android:name="com.transactions.homework.ui.transaction_details.TransactionDetailsFragment"
+        android:label="TransactionDetailsFragment"
+        tools:layout="@layout/fragment_transaction_details">
+        <argument
+            android:name="model"
+            app:argType="com.transactions.homework.data.transaction.TransactionUIModel"
+            app:nullable="false" />
+    </fragment>
 </navigation>

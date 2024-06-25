@@ -2,6 +2,7 @@ package com.transactions.homework.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import com.transactions.homework.domain.common.model.ResultObject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -12,6 +13,7 @@ abstract class BaseVM : ViewModel(), ProgressDispatcher {
     override val progressFlow = MutableSharedFlow<Boolean>(1)
 
     var errorFlow = MutableSharedFlow<Throwable>()
+    var navigationFlow = MutableSharedFlow<NavDirections>()
 
     override suspend fun showProgress() {
         progressFlow.emit(true)
@@ -21,12 +23,12 @@ abstract class BaseVM : ViewModel(), ProgressDispatcher {
         progressFlow.emit(false)
     }
 
-    fun onError(error: Throwable) {
-        errorFlow.emitViewModelScope(error)
-    }
-
     fun onError(error: ResultObject.Error) {
         errorFlow.emitViewModelScope(error.errorCause)
+    }
+
+    protected fun navigate(direction: NavDirections) {
+        navigationFlow.emitViewModelScope(direction)
     }
 
     suspend fun <T> SharedFlow<T>.emit(value: T) {
@@ -40,20 +42,6 @@ abstract class BaseVM : ViewModel(), ProgressDispatcher {
     fun <T> SharedFlow<T>.emitViewModelScope(value: T) {
         viewModelScope.launch {
             emit(value)
-        }
-    }
-
-    fun SharedFlow<Unit>.emitViewModelScope() {
-        viewModelScope.launch {
-            emit(Unit)
-        }
-    }
-
-    suspend fun SharedFlow<Unit>.emit() {
-        if (this is MutableSharedFlow) {
-            emit(Unit)
-        } else {
-            throw IllegalStateException("$this is not MutableSharedFlow. Cannot perform emit()")
         }
     }
 }

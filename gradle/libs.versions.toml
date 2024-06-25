@@ -44,9 +44,12 @@ fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipe-refresh"}
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "jetpack-navigation"}
 androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "jetpack-navigation"}
-
+navigation-safe-args-gradle-plugin = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "jetpack-navigation"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+hilt = { id = "com.google.dagger.hilt.android" }
+safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin" }
+safeargs-plugin = { id = "androidx.navigation.safeargs" }
+parcelize = { id = "kotlin-parcelize" }

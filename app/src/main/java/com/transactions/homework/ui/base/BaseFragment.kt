@@ -4,11 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.snackbar.Snackbar
+import com.transactions.homework.R
 import factory.BindingFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
@@ -25,6 +31,8 @@ abstract class BaseFragment<T : BaseVM, VB : ViewBinding> : Fragment() {
     protected abstract val observeFlow: T.() -> Unit
 
     protected open fun observeBaseFlow() = with(viewModel) {
+        errorFlow.observeWhenResumed(::handleError)
+        navigationFlow.observeWhenResumed(::navigate)
         observeFlow()
     }
 
@@ -45,6 +53,23 @@ abstract class BaseFragment<T : BaseVM, VB : ViewBinding> : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    protected open fun goBack() {
+        activity?.onBackPressed()
+    }
+
+    protected fun navigate(direction: NavDirections) {
+        findNavController().navigate(direction)
+    }
+
+    private fun handleError(throwable: Throwable) {
+        val snackbar = Snackbar.make(requireView(), throwable.message.toString(), 5000)
+        val snackTv = snackbar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        snackbar.setAction(R.string.ok) { snackbar.dismiss() }
+        snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        snackTv.maxLines = 5
+        snackbar.show()
     }
 
     protected inline fun <T> Flow<T>.observeInLifecycle(crossinline observer: (T) -> Unit) {
