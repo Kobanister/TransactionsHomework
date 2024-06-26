@@ -27,6 +27,7 @@ class ParcelTest(
         @Parameterized.Parameters(name = "initialObject: {0}. classLoader: {1}")
         fun getParameters() = buildTestParameters(1) {
             val transactionUiModel1 = TransactionUIModel(
+                id = "id1",
                 name = "Test Name",
                 accountNumber = "TestAccountNumber",
                 amount = 123.45,
@@ -35,6 +36,7 @@ class ParcelTest(
             )
 
             val transactionUiModel2 = TransactionUIModel(
+                id = "id2",
                 name = "Test Name2",
                 accountNumber = "TestAccountNumber2",
                 amount = 1234.56,
