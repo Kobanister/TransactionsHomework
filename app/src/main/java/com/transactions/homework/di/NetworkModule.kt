@@ -4,9 +4,9 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.transactions.homework.BuildConfig
-import com.transactions.homework.data.remote.ConnectionTimeoutInterceptor
-import com.transactions.homework.data.remote.api.Api
-import com.transactions.homework.data.remote.util.HttpLogger
+import com.transactions.homework.data.source.remote.ConnectionTimeoutInterceptor
+import com.transactions.homework.data.source.remote.api.Api
+import com.transactions.homework.data.source.remote.util.HttpLogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

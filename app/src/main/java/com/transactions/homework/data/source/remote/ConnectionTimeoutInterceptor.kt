@@ -1,4 +1,4 @@
-package com.transactions.homework.data.remote
+package com.transactions.homework.data.source.remote
 
 import okhttp3.Interceptor
 import okhttp3.Response

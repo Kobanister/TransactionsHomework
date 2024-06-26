@@ -1,4 +1,4 @@
-package com.transactions.homework.data.remote.util
+package com.transactions.homework.data.source.remote.util
 
 import android.util.Log
 import okhttp3.logging.HttpLoggingInterceptor
