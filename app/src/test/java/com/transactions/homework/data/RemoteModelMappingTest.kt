@@ -24,7 +24,7 @@ class RemoteModelMappingTest(private val remoteData: TransactionRemote, private 
     @Test
     fun testParsing() {
         // When
-        val actualResult = mapper.map(remoteData)
+        val actualResult = mapper.mapRemoteToExternal(remoteData)
         // Then
         assertEquals(expectedResult, actualResult)
     }
@@ -33,24 +33,25 @@ class RemoteModelMappingTest(private val remoteData: TransactionRemote, private 
         @JvmStatic
         @Parameterized.Parameters(name = "remoteData: {0}. expectedResult: {1}")
         fun getParameters() = buildTestParameters(2) {
-                append(
-                    TransactionRemote(
-                        id = "1",
-                        name = "Gail Fay",
-                        accountNumber = "VG37211Q1695809173005334",
-                        type = "debit",
-                        amount = "672.28",
-                        description = "invoice transaction at Lang, Bartell and Zemlak using card ending with ***(...9015) for PKR 894.94 in account ***74548458",
-                        date = "2025-04-11T23:47:54.064Z"
-                    ),
-                    TransactionUIModel(
-                        name = "Gail Fay",
-                        accountNumber = "VG37211Q1695809173005334",
-                        amount = -672.28,
-                        description = "invoice transaction at Lang, Bartell and Zemlak using card ending with ***(...9015) for PKR 894.94 in account ***74548458",
-                        date = "02:47 12.04.2025"
-                    )
+            append(
+                TransactionRemote(
+                    id = "1",
+                    name = "Gail Fay",
+                    accountNumber = "VG37211Q1695809173005334",
+                    type = "debit",
+                    amount = "672.28",
+                    description = "invoice transaction at Lang, Bartell and Zemlak using card ending with ***(...9015) for PKR 894.94 in account ***74548458",
+                    date = "2025-04-11T23:47:54.064Z"
+                ),
+                TransactionUIModel(
+                    id = "1",
+                    name = "Gail Fay",
+                    accountNumber = "VG37211Q1695809173005334",
+                    amount = -672.28,
+                    description = "invoice transaction at Lang, Bartell and Zemlak using card ending with ***(...9015) for PKR 894.94 in account ***74548458",
+                    date = "02:47 12.04.2025"
                 )
-            }
+            )
+        }
     }
 }
