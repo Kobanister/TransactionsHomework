@@ -8,6 +8,12 @@ inline fun <T, P> ResultObject<T>.mapIfSuccess(transformation: (T) -> ResultObje
         is ResultObject.Error -> this
     }
 
+inline fun <T> ResultObject<T>.mapIfError(transformation: (Throwable?) -> ResultObject<T>): ResultObject<T> =
+    when (this) {
+        is ResultObject.Error -> transformation(this.errorCause)
+        is ResultObject.Success -> this
+    }
+
 inline fun <T> ResultObject<T>.runIfSuccess(action: (T) -> Unit) {
     if (this is ResultObject.Success) {
         action(this.value)
