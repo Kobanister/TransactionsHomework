@@ -79,6 +79,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
+    // Encryption
+    implementation(libs.androidx.security.crypto.ktx)
+    implementation(libs.android.database.sqlcipher)
+
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

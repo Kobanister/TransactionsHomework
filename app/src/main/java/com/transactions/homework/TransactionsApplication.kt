@@ -8,5 +8,6 @@ open class TransactionsApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        System.loadLibrary("sqlcipher")
     }
 }
