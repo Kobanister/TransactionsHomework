@@ -20,8 +20,8 @@
         android:label="TransactionDetailsFragment"
         tools:layout="@layout/fragment_transaction_details">
         <argument
-            android:name="model"
-            app:argType="com.transactions.homework.data.transaction.TransactionUIModel"
+            android:name="transactionId"
+            app:argType="string"
             app:nullable="false" />
     </fragment>
 </navigation>

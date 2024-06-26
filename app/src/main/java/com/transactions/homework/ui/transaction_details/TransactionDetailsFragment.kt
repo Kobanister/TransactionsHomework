@@ -15,17 +15,26 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TransactionDetailsFragment : BaseFragment<TransactionDetailsVM, FragmentTransactionDetailsBinding>() {
     override val viewModel: TransactionDetailsVM by viewModels()
-    override val observeFlow: TransactionDetailsVM.() -> Unit = {}
+    override val observeFlow: TransactionDetailsVM.() -> Unit = {
+        transactionDetailsFlow.observeInLifecycle(::setupUi)
+    }
 
     private val safeArgs by navArgs<TransactionDetailsFragmentArgs>()
-    private val transactionData: TransactionUIModel
-        get() = safeArgs.model
+    private val transactionId: String
+        get() = safeArgs.transactionId
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.onCreate(transactionId)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.ivBack.setOnClickListener { goBack() }
+    }
 
+    private fun setupUi(transactionData: TransactionUIModel) {
         with(binding) {
-            ivBack.setOnClickListener { goBack() }
             tvName.text = transactionData.name
             tvAccountNumber.text = transactionData.accountNumber
             tvDate.text = transactionData.date

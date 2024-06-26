@@ -14,6 +14,7 @@ class TransactionToUIModelMapper @Inject constructor(private val dateTimeFormatt
             val transactionType = TransactionType.typeOf(type)
             val transactionAmount = amount?.toDoubleOrNull() ?: 0.0
             TransactionUIModel(
+                id = id ?: "",
                 name = name ?: "N/A",
                 accountNumber = accountNumber ?: "N/A",
                 amount = if (transactionType == TransactionType.DEBIT) transactionAmount.unaryMinus() else transactionAmount,
@@ -42,6 +43,7 @@ class TransactionToUIModelMapper @Inject constructor(private val dateTimeFormatt
             val transactionType = TransactionType.typeOf(type)
             val transactionAmount = amount?.toDoubleOrNull() ?: 0.0
             TransactionUIModel(
+                id = id,
                 name = name ?: "N/A",
                 accountNumber = accountNumber ?: "N/A",
                 amount = if (transactionType == TransactionType.DEBIT) transactionAmount.unaryMinus() else transactionAmount,

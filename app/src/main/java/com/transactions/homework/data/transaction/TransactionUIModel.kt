@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TransactionUIModel(
+    val id: String,
     val name: String,
     val accountNumber: String,
     val amount: Double,

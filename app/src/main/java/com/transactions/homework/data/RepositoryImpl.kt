@@ -30,4 +30,8 @@ class RepositoryImpl @Inject constructor(
                 ResultObject.Error(error)
         }
     }
+
+    override suspend fun getTransactionById(transactionId: String): TransactionUIModel {
+        return transactionsMapper.mapLocalToExternal(transactionsDao.getById(transactionId))
+    }
 }

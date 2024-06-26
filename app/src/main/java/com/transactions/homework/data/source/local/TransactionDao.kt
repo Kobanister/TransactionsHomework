@@ -15,4 +15,7 @@ interface TransactionDao {
 
     @Query("DELETE FROM transactions")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM transactions WHERE id = :transactionId")
+    suspend fun getById(transactionId: String): TransactionLocal
 }

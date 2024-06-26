@@ -5,4 +5,6 @@ import com.transactions.homework.domain.common.model.ResultObject
 
 interface Repository {
     suspend fun getTransactionsList(): ResultObject<List<TransactionUIModel>>
+
+    suspend fun getTransactionById(transactionId: String): TransactionUIModel
 }

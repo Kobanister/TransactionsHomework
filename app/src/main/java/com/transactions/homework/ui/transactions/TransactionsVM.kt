@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TransactionsVM @Inject constructor(private val getTransactionsListUseCase: GetTransactionsListUseCase) : BaseVM() {
-
     val transactionsListFlow = MutableStateFlow<ArrayList<TransactionUIModel>>(arrayListOf())
     val accountBalanceFlow = MutableStateFlow(AccountBalance(0.0))
 
@@ -47,6 +46,6 @@ class TransactionsVM @Inject constructor(private val getTransactionsListUseCase:
     }
 
     fun onTransactionItemClick(transaction: TransactionUIModel) {
-        navigate(TransactionsFragmentDirections.openTransactionDetails(transaction))
+        navigate(TransactionsFragmentDirections.openTransactionDetails(transaction.id))
     }
 }
